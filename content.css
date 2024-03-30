@@ -82,6 +82,11 @@
     animation: loading-dots-animation 1.2s infinite;
 }
 
+.result-copy {
+    display: none;
+    float: right;
+}
+
 @keyframes loading-dots-animation {
     0% {
         transform: scale(0);

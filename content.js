@@ -8,19 +8,31 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         });
     }
 
-    fetch("https://api.openai.com/v1/chat/completions", {
+    //check message:
+    var prompt="";
+    switch (message.info.menuItemId) {
+        case 'wording':
+            prompt = "Check spelling and grammar";
+            break;
+        case 'improve':
+            prompt = "Can you improve following";
+            break;
+        default:
+            console.log("no default prompt match");
+    };
+
+    fetch(message.config.chatGPT_api_URL+"/chat/completions", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + message.api_key
+            "Authorization": "Bearer " + message.config.chatGPT_api_key
         },
         body: JSON.stringify({
-            model: "gpt-3.5-turbo",
-            messages: [{ "role": "user", "content": "Can you improve following - " + message.info.selectionText }]
+            model: message.config.selectedModel,
+            messages: [{ "role": "user", "content": prompt + ". Input text: "+ message.info.selectionText }]
         })
     })
         .then(response => {
-            console.log(response)
             if (!response.ok) {
                 throw new Error("Following error occured while fetching response \r\n Error " + response.status + ": " + response.statusText);
             }
@@ -30,7 +42,16 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
             // get the first suggestion from the response
             const suggestion = data.choices[0].message.content.trim();
             const resultContent = div.querySelector(".result-content");
-            resultContent.innerHTML = suggestion;
+            resultContent.innerText = suggestion;
+            // Check toggle options from storage
+            chrome.storage.sync.get(["addCopyButtonToggle", "autoCopyResultToggle"], function(options) {
+                if (options.addCopyButtonToggle) {
+                    div.querySelector(".result-copy").style.display = "block";
+                }
+                if (options.autoCopyResultToggle) {
+                    copyTextToClipboard(suggestion);
+                }
+            });
         })
         .catch(error => {
             console.log(error)
@@ -39,6 +60,14 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
             resultContent.innerHTML = error.toString();
         });
 });
+
+function copyTextToClipboard(text) {
+    navigator.clipboard.writeText(text).then(function() {
+      //console.log('Copying to clipboard was successful!');
+    }, function(err) {
+      console.error('Could not copy text: ', err);
+    });
+}
 
 function injectDivBlock() {
     const div = document.createElement("div");
@@ -55,6 +84,9 @@ function injectDivBlock() {
       <div></div>
     </div>
     </div>
+    <div class="result-footer">
+        <input class="result-copy" type="button" value="Copy" />
+    </div>
   `;
     div.classList.add("result-block");
     document.body.appendChild(div);
@@ -62,6 +94,10 @@ function injectDivBlock() {
     const closeButton = div.querySelector(".result-close");
     closeButton.addEventListener("click", () => {
         div.remove();
+    });
+    const copyButton = div.querySelector(".result-copy");
+    copyButton.addEventListener("click", () => {
+        copyTextToClipboard(div.querySelector(".result-content").innerText);
     });
     return div
 }

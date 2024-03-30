@@ -7,13 +7,44 @@
 </head>
 
 <body>
-    <p>This is an extension for ChatGPT search.</p>
+    
     <div id="main">
         <label for="api-key-input">Enter your ChatGPT API key</label>
         <input type="text" id="api-key-input">
         <div style="display: flex; justify-content: center;">
             <button id="save-api-key">Save</button>
         </div>
+    </div>
+    <h2>Extension Options</h2>
+
+    <div>
+        <label class="list">
+            <form>
+                <label for="model-select">Choose a model</label>
+                <select id="model-select" name="model-select">
+                </select>
+             </form>
+        </label>
+    </div>
+
+    <div>
+        <label class="switch">
+          <input type="checkbox" id="addCopyButtonToggle">
+          <span class="slider round"></span>
+        </label>
+        <label for="addCopyButtonToggle">Add Copy Button to Interface</label>
+    </div>
+    
+    <div>
+        <label class="switch">
+          <input type="checkbox" id="autoCopyResultToggle">
+          <span class="slider round"></span>
+        </label>
+        <label for="autoCopyResultToggle">Automatically Copy Result to Clipboard</label>
+    </div>
+
+    <div style="padding-bottom: 15px;">
+
     </div>
     <script src="popup.js"></script>
 </body>

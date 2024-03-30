@@ -1,8 +1,20 @@
 chrome.runtime.onInstalled.addListener(() => {
-    console.log("test")
+    console.log("ChatGPT-Extension loaded.")
+
+    const api_URL = "https://api.openai.com/v1";
+    chrome.storage.sync.set({"chatGPT_api_URL": api_URL}, function() {
+        console.log("API url saved - using: " + api_URL);
+    });
+
     //create context menu
     chrome.contextMenus.create({
         id: "wording",
+        title: "Spelling & Grammar",
+        contexts: ["selection"],
+    });
+    
+    chrome.contextMenus.create({
+        id: "improve",
         title: "Suggest Improvement",
         contexts: ["selection"],
     });
@@ -10,13 +22,13 @@ chrome.runtime.onInstalled.addListener(() => {
 
 // listener for context menu
 chrome.contextMenus.onClicked.addListener(function (info, tab) {
-    chrome.storage.sync.get("chatGPT_api_key", function (result) {
-        if (chrome.runtime.lastError) {
-            console.error(chrome.runtime.lastError);
-            return;
-        }
-        const api_key = result.chatGPT_api_key;
 
-        chrome.tabs.sendMessage(tab.id, { api_key: api_key, info: info });
+    chrome.storage.sync.get({
+        selectedModel: false,
+        chatGPT_api_key: false,
+        chatGPT_api_URL: false
+    }, function(items) {
+        chrome.tabs.sendMessage(tab.id, { config: items, info: info })
     });
+
 });
