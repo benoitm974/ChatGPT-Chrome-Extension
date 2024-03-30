@@ -76,6 +76,9 @@ function populateModel(api_URL, api_key, selectedModel){
             }
             select.appendChild(opt);
         });
+        // Create a new 'change' event
+        const event = new Event('change');
+        select.dispatchEvent(event);
     })
     .catch(error => {
         console.error('An error occurred:', error);

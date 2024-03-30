@@ -1,7 +1,7 @@
 {
   "name": "ChatGPT-Chrome-Extension",
   "description": "This extension helps in code review, spelling and grammar through ChatGPT API",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "manifest_version": 3,
   "background": {
     "service_worker": "background.js"
@@ -9,7 +9,10 @@
   "icons": {
     "128": "logo.png"
   },
-  "permissions": ["activeTab", "storage", "contextMenus", "clipboardWrite", "https://api.openai.com/*"],
+  "permissions": ["activeTab", "storage", "contextMenus", "clipboardWrite"],
+  "host_permissions": [
+    "https://api.openai.com/*"
+  ],
   "action": {
     "default_popup": "popup.html"
   },
