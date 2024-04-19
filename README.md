@@ -23,7 +23,7 @@ To use this extension:
 
 - Obtain a ChatGPT API key by following the instructions on the [OpenAI website](https://platform.openai.com/docs/api-reference/authentication).
 - Click on the ChatGPT extension icon in the Chrome toolbar.
-For code improvement o spelling and grammar:
+For code improvement or checking spelling and grammar:
 - Select the code that you want to improve
 - Enter your API key in the provided field and click "Save".
 - To generate suggestions, select text on a webpage and right-click to bring up the context menu. Click "Suggest Improvement" or "Spelling and grammar" and wait for the suggestion to appear.
