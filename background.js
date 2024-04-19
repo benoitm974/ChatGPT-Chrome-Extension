@@ -9,7 +9,7 @@ chrome.runtime.onInstalled.addListener(() => {
     //create context menu
     chrome.contextMenus.create({
         id: "wording",
-        title: "Spelling & Grammar",
+        title: "Spelling and Grammar",
         contexts: ["selection"],
     });
     
