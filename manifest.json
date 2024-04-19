@@ -1,7 +1,7 @@
 {
   "name": "ChatGPT-Chrome-Extension",
   "description": "This extension helps in code review, spelling and grammar through ChatGPT API",
-  "version": "0.0.3",
+  "version": "0.0.2",
   "manifest_version": 3,
   "background": {
     "service_worker": "background.js"
