@@ -26,7 +26,7 @@ To use this extension:
 For code improvement or checking spelling and grammar:
 - Select the code that you want to improve
 - Enter your API key in the provided field and click "Save".
-- To generate suggestions, select text on a webpage and right-click to bring up the context menu. Click "Suggest Improvement" or "Spelling and grammar" and wait for the suggestion to appear.
+- To generate suggestions, select text on a webpage and right-click to bring up the context menu. Click "Suggest Improvement" or "Spelling and Grammar" and wait for the suggestion to appear.
  
 
 # Contributing
